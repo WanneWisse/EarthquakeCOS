@@ -12,7 +12,7 @@ print(min_date)
 print(max_date)
 
 #filtering english
-df = df[df['language'] == 'en']
+#df = df[df['language'] == 'en']
 
 
 #create bar per date
@@ -20,10 +20,18 @@ count_df = df.groupby(df['date'].dt.date).size()
 
 count_df.plot.bar()
 
-plt.title('Amount of tweets per day')
-plt.xlabel('Date')
-plt.ylabel('Amount tweets')
+plt.title('Amount of tweets per day', fontsize=50)
+plt.xlabel('Date', fontsize=40)
+plt.ylabel('Amount tweets', fontsize=40)
+
+plt.xticks(fontsize = 20, rotation=45)
+plt.yticks(fontsize = 30)
 plt.show()
+
+#grouped by language
+grouped_language = df.groupby(df['language']).size()
+print(grouped_language.sort_values(ascending=False))
+
 
 
 #create bar per datarange
