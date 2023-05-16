@@ -2,6 +2,7 @@ from deep_translator import MyMemoryTranslator, GoogleTranslator
 import pandas as pd
 import numpy as np
 import concurrent.futures
+import helpers
 
 
 i=0
@@ -11,11 +12,6 @@ def translate_batch(translate_session, tweet):
     translated = translate_session.translate_batch(list(tweet))
 
     return translated
-
-def load_data_exp_1(file_name):
-    df = pd.read_csv('tweets.csv',  low_memory=False)
-    df = df[["content","language"]]
-    return df
 
 def chunk_handling(session, chunk):
     chunk["content"] = translate_batch(session, chunk["content"])
@@ -30,24 +26,13 @@ def append_result(result):
 
 
 
-df = load_data_exp_1('tweets.csv')
-
-df= df.head(5000)
+df = helpers.load_data_exp_1('tweets.csv')
 #first remove eniglish
 df_without_english = df[df['language'] != 'en'] 
 df_with_english = df[df['language'] == 'en'] 
 
 #split in chunks of 100 for batch to google translate
-chunks_df_without_english = np.array_split(df_without_english, len(df_without_english) // 100)
-
-
-
-# session = GoogleTranslator(source='auto', target='en')
-# for chunk in chunks_df_without_english:
-#     result = chunk_handling(session,chunk)
-#     translated_dfs.append(result)
-#     i+=1
-#     print(i)
+chunks_df_without_english = np.array_split(df_without_english, len(df_without_english) // 10)
 
 
 with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
