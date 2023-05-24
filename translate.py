@@ -31,7 +31,7 @@ df = helpers.load_data_exp_1('part_1.csv')
 df_without_english = df[df['language'] != 'en'] 
 
 #split in chunks of 100 for batch to google translate
-chunks_df_without_english = np.array_split(df_without_english, len(df_without_english) // 10)
+chunks_df_without_english = np.array_split(df_without_english, len(df_without_english) // 500)
 
 
 with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
