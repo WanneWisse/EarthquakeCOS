@@ -26,20 +26,15 @@ def append_result(result):
 
 
 
-df = helpers.load_data_exp_1('tweets.csv')
+df = helpers.load_data_exp_1('part_1.csv')
 #first remove eniglish
 df_without_english = df[df['language'] != 'en'] 
-df_with_english = df[df['language'] == 'en'] 
 
 #split in chunks of 100 for batch to google translate
 chunks_df_without_english = np.array_split(df_without_english, len(df_without_english) // 10)
 
 
 with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
-
-   
-    
-    translated_dfs.append(df_with_english)
     # Submit the tasks to the thread pool
     futures = [executor.submit(chunk_handling, GoogleTranslator(source='auto', target='en'), item) for item in chunks_df_without_english]
 
@@ -49,7 +44,7 @@ with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
 
 
 result = pd.concat(translated_dfs, ignore_index=True)
-result.to_csv('out.csv',index=False)
+result.to_csv('out_part_1.csv',index=False)
 
 
 
