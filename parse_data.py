@@ -33,7 +33,6 @@ grouped_language = df.groupby(df['language']).size()
 print(grouped_language.sort_values(ascending=False))
 
 
-
 #create bar per datarange
 df['date'] = df['date'].dt.date
 grouped = df.groupby(df['date'])
