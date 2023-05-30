@@ -5,10 +5,10 @@ df = pd.read_csv('tweets.csv')
 df = df[df['language'] != 'en'] 
 # Calculate the number of rows in each part
 num_rows = len(df)
-rows_per_part = num_rows // 5
+rows_per_part = num_rows // 10
 
 # Split the DataFrame into five parts
-parts = [df[i * rows_per_part:(i + 1) * rows_per_part] for i in range(5)]
+parts = [df[i * rows_per_part:(i + 1) * rows_per_part] for i in range(10)]
 
 # Save each part to a separate CSV file
 for i, part in enumerate(parts):

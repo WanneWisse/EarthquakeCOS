@@ -5,7 +5,6 @@ import numpy as np
 from sklearn.cluster import KMeans
 
 def get_tf_idf_matrix(df):
-    df = helpers.load_data_exp_1('preprocessed_tweets.csv')
     df['content'].fillna('', inplace=True)
     # Initialize the TfidfVectorizer
     vectorizer = TfidfVectorizer()
