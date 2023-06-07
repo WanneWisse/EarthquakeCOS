@@ -60,7 +60,11 @@ def remove_urls(text):
     text_without_urls = re.sub(r'http\S+|www\S+|https\S+', '', text)
     return text_without_urls
 
-df = helpers.load_data_exp_1('tweets.csv')
+nltk.download('stopwords')
+nltk.download('wordnet')
+
+df = helpers.load_data_exp_1('data/tweets.csv')
+
 df= df[df['language'] == 'en'] 
 
 df["content"] = df["content"].apply(remove_smilies)
